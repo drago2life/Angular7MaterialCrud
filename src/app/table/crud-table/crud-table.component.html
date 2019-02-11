@@ -1,0 +1,226 @@
+<div *ngIf="isLoaded">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <!-- <mat-progress-bar mode="buffer"></mat-progress-bar> -->
+</div>
+
+
+
+<button mat-raised-button (click)="show()"> <mat-icon color="accent">add</mat-icon> Add User </button>
+<br>
+
+<div *ngIf="showTable">
+<!-- ----------------------------Add user table----------------------------------->
+  <table mat-table [dataSource]="dataSourceAddRecovery">
+      <!-- Name Column -->
+      <ng-container matColumnDef="unitname">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                  <input matInput #inputunitname class="form-control" placeholder="Enter unit name" [(ngModel)]="element.unitname" name="unitname" required >
+                  <mat-error *ngIf="unitname.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+      </ng-container>
+
+
+      <!-- Surname Column -->
+      <ng-container matColumnDef="mtm" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                  <input matInput  #inputmtm  class="form-control" placeholder="mtm"  [(ngModel)]="element.mtm" required name="mtm">
+                  <mat-error *ngIf="mtm.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="recoveryName">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                  <input  matInput  #inputrecoveyName  class="form-control"  placeholder="recoveryName" [(ngModel)]="element.recoveryName" name="recoveryName" required>
+                  <mat-error *ngIf="recoveryName.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="os" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                  <input  #inputos  class="form-control"   [(ngModel)]="element.os" matInput placeholder="Enter your os" name="os"
+                      required>
+                  <mat-error *ngIf="os.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+      </ng-container>
+
+              <!-- Age Column -->
+              <ng-container matColumnDef="mediaTypes">
+                  <th mat-header-cell *matHeaderCellDef> </th>
+                  <td mat-cell *matCellDef="let element">
+                      <mat-form-field floatLabel="never">
+                          <input matInput   #inpumediaTypes  class="form-control"  placeholder="mediaTypes" [(ngModel)]="element.mediaTypes" name="mediaTypes" required>
+                          <mat-error *ngIf="mediaTypes.invalid">{{getErrorMessage()}}</mat-error>
+                      </mat-form-field>
+                  </td>
+              </ng-container>
+
+                      <!-- Age Column -->
+      <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <mat-form-field floatLabel="never">
+                  <input  matInput  #inputlocation  class="form-control"  placeholder="location"  [(ngModel)]="element.location" name="location" required>
+                  <mat-error *ngIf="location.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </td>
+      </ng-container>
+
+      <!-- Save Column -->
+      <ng-container matColumnDef="Save">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <button mat-raised-button (click)="saveRecovery(element)"  > <mat-icon color="accent">save</mat-icon>
+                  Save </button>
+          </td>
+      </ng-container>
+
+      <!-- Cancel Column -->
+      <ng-container matColumnDef="Cancel">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+              <button mat-raised-button (click)="cancel()"> <mat-icon color="accent">cancel</mat-icon> Cancel </button>
+          </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsAddRecovery"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsAddRecovery;"></tr>
+  </table>
+</div>
+<br>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+
+<!-- ----------------------------Users table----------------------------------->
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSourceRecoverys" matSort class="mat-elevation-z8">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="unitname" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> unitname </th>
+          <td mat-cell *matCellDef="let element"><p *ngIf="show1; else notShow">{{element.unitname}}</p>
+            <ng-template #notShow>
+              <mat-form-field floatLabel="never" ng-show="showme">
+                  <input matInput placeholder="unitname" [value]="element.unitname"  >
+              </mat-form-field>
+            </ng-template>
+          </td>
+      </ng-container>
+
+      
+         
+  
+
+      <!-- Surname Column -->
+      <ng-container matColumnDef="mtm" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> mtm </th>
+          <td mat-cell *matCellDef="let element"> <p *ngIf="show1; else notShow">{{element.mtm}}</p>
+                <ng-template #notShow>
+              <mat-form-field floatLabel="never">
+                  <input matInput placeholder="mtm" [value]="element.mtm" >
+              </mat-form-field>
+              </ng-template>
+          </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="recoveryName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> recoveryName </th>
+          <td mat-cell *matCellDef="let element"> <p *ngIf="show1; else notShow">{{element.recoveryName}}</p>
+                <ng-template #notShow>
+              <mat-form-field floatLabel="never">
+                  <input  matInput placeholder="recoveryName" [value]="element.recoveryName"  >
+             
+              </mat-form-field>
+              </ng-template>
+          </td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="os" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> os </th>
+          <td mat-cell *matCellDef="let element"><p *ngIf="show1; else notShow">{{element.os}}</p>
+                <ng-template #notShow>
+              <mat-form-field floatLabel="never">
+                  <input matInput placeholder="os" [value]="element.os" >
+              </mat-form-field>
+              </ng-template>
+          </td>
+      </ng-container>
+
+              <!-- Surname Column -->
+              <ng-container matColumnDef="mediaTypes" fxFlex="40px">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> mediaTypes </th>
+                  <td mat-cell *matCellDef="let element"><p *ngIf="show1; else notShow">{{element.mediaTypes}}</p>
+                        <ng-template #notShow>
+                      <mat-form-field floatLabel="never">
+                          <input matInput placeholder="mediaTypes" [value]="element.mediaTypes" >
+                      </mat-form-field>
+                      </ng-template>
+                  </td>
+              </ng-container>
+
+                      <!-- Surname Column -->
+      <ng-container matColumnDef="location" fxFlex="40px">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> location </th>
+          <td mat-cell *matCellDef="let element"><p *ngIf="show1; else notShow">{{element.location}}</p>
+                <ng-template #notShow>
+              <mat-form-field floatLabel="never">
+                  <input matInput placeholder="location" [value]="element.location" >
+              </mat-form-field>
+              </ng-template>
+          </td>
+      </ng-container>
+
+      
+      <!-- Change Column -->
+      <ng-container matColumnDef="Change">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td  id="actions" mat-cell *matCellDef="let element" >
+             <div *ngIf="show1; else notShow">
+              <button  mat-raised-button (click)="showhideEdit()" > <mat-icon color="accent">edit</mat-icon> Edit </button>
+               <button mat-raised-button (click)="openDialog(element)"> <mat-icon color="accent">delete</mat-icon> Delete</button>
+               </div>
+        <ng-template #notShow>
+            
+                        <button  mat-raised-button (click)="editRecovery(element)" > <mat-icon color="accent">save</mat-icon> Save </button>
+                        <button mat-raised-button (click)="showhideEdit()"> <mat-icon color="accent">cancel</mat-icon> Cancel</button>
+        </ng-template>
+          </td>
+      </ng-container>
+    
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsRecoverys"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsRecoverys;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+
