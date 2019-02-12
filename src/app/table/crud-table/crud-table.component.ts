@@ -30,7 +30,7 @@ export class CrudTableComponent implements OnInit {
     statusMessage: string;
     isLoaded = true;
     displayedColumnsRecoverys: string[] = ['id', 'unitname', 'mtm', 'recoveryName', 'os', 'mediaTypes', 'location', 'Change'];
-    displayedColumnsAddRecovery: string[] = ['unitname', 'mtm', 'recoveryName', 'os', 'mediaTypes', 'location', 'Save', 'Cancel'];
+    displayedColumnsAddRecovery: string[] = ['unitname', 'mtm', 'recoveryName', 'os', 'mediaTypes', 'location', 'Change'];
     dataSourceRecoverys: any;
     dataSourceAddRecovery: any;
     newRecovery: Recovery;
@@ -40,17 +40,18 @@ export class CrudTableComponent implements OnInit {
 
     @ViewChild(MatSort) sort: MatSort;
       // типы шаблонов
-  // типы шаблонов
-  @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
-  @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
-//   Form field with error messages
+// //   Form field with error messages
     unitname = new FormControl('', [Validators.required]);
     mtm = new FormControl('', [Validators.required]);
     recoveryName = new FormControl('', [Validators.required]);
     os = new FormControl('', [Validators.required]);
     mediaTypes = new FormControl('', [Validators.required]);
     location = new FormControl('', [Validators.required]);
+
+
+
+
 
 
 
@@ -175,10 +176,36 @@ export class CrudTableComponent implements OnInit {
         this.show1 = !this.show1;
     }
 
+    getErrorMessageName() {
+        return this.unitname.hasError('required') ? 'Required field. Minimum input 4 characters.'
+                : '';
+      }
 
-    getErrorMessage() {
-        return this.unitname.hasError('required') ? 'You must enter a value' :
-            this.unitname.hasError('unitname') ? 'Not a valid unitname' : '';
-    }
+      getErrorMessageMTM() {
+        return this.mtm.hasError('required') ? 'Required field. Minimum input 4 characters.'
+                : '';
+      }
+
+      getErrorMessageRecovery() {
+        return this.recoveryName.hasError('required') ? 'Required field. Minimum input 7 characters.'
+                : '';
+      }
+
+      getErrorMessageOs() {
+        return this.os.hasError('required') ? 'Required field. Please select option from dropdown menu.'
+                : '';
+      }
+
+      getErrorMessageMedia() {
+        return this.mediaTypes.hasError('required') ? 'Required field. Please select option from dropdown menu.'
+                : '';
+      }
+
+      getErrorMessageLocation() {
+        return this.location.hasError('required') ? 'Required field. Please select option from dropdown menu.'
+                : '';
+      }
+
+
 
 }

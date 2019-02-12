@@ -5,142 +5,141 @@
 
 
 
-<button mat-raised-button (click)="show()"> <mat-icon color="accent">add</mat-icon> Add User </button>
+<button mat-raised-button (click)="show()"> <mat-icon color="accent">add</mat-icon> Add Recovery </button>
 <br>
 
 <div *ngIf="showTable">
-<!-- ----------------------------Add user table----------------------------------->
-  <table mat-table [dataSource]="dataSourceAddRecovery">
-      <!-- Name Column -->
-      <ng-container matColumnDef="unitname">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-                <mat-form-field color="accent">
-                        <textarea matInput #inputmodel class="form-control" placeholder="Model" [(ngModel)]="element.unitname" name="name" required minlength="4"></textarea>
-                        <mat-error *ngIf="unitname.invalid">{{getErrorMessage()}} Min: {{inputmodel.value?.length || 0}}/4</mat-error>
-                        <mat-hint align="end">Min: {{inputmodel.value?.length || 0}}/4</mat-hint>
-                        <mat-hint align="start"><strong>Input model name</strong> </mat-hint>
-                      </mat-form-field>
-          </td>
-      </ng-container>
+        <!-- ----------------------------Add user table----------------------------------->
+            <table mat-table [dataSource]="dataSourceAddRecovery">
+                <!-- Name Column -->
+                <ng-container matColumnDef="unitname">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input #inputmodel [value]="element.unitname" [(ngModel)]="element.unitname" matInput placeholder="Enter your name" [formControl]="unitname" required minlength="4">
+                            <mat-error *ngIf="unitname.invalid">{{getErrorMessageName()}} Min: {{inputmodel.value?.length || 0}}/4</mat-error>
+                            <mat-hint align="end">Min: {{inputmodel.value?.length || 0}}/4</mat-hint>
+                            <mat-hint align="start"><strong>Input model name</strong> </mat-hint>
 
-
-      <!-- Surname Column -->
-      <ng-container matColumnDef="mtm" fxFlex="40px">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-                <mat-form-field color="accent">
-                        <input matInput #inputmtm class="form-control" placeholder="MTM" [(ngModel)]="element.mtm" name="mtm" minlength="4" required >
-                        <mat-error *ngIf="mtm.invalid">{{getErrorMessage()}} Min: {{inputmtm.value?.length || 0}}/4</mat-error>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+        
+                <!-- Surname Column -->
+                <ng-container matColumnDef="mtm" fxFlex="40px">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input  #inputmtm matInput placeholder="mtm" [value]="element.mtm" [(ngModel)]="element.mtm" required  minlength="4" [formControl]="mtm">
+                            <mat-error *ngIf="mtm.invalid">{{getErrorMessageMTM()}} Min: {{inputmtm.value?.length || 0}}/4</mat-error>
                             <mat-hint align="end">Min: {{inputmtm.value?.length || 0}}/4</mat-hint>
-                            <mat-hint align="start"><strong>Input type/mtm of unit</strong> </mat-hint>
-                      </mat-form-field>
+                            <mat-hint align="start"><strong>Input model name</strong> </mat-hint>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+        
+                <!-- Age Column -->
+                <ng-container matColumnDef="recoveryName">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <input  #inputrecovery  matInput placeholder="recoveryName" [value]="element.recoveryName" [(ngModel)]="element.recoveryName" [formControl]="recoveryName" required minlength="7" >
+                            <mat-error *ngIf="recoveryName.invalid">{{getErrorMessageRecovery()}} Min: {{inputrecovery.value?.length || 0}}/7</mat-error>
+          <mat-hint align="end">Min: {{inputrecovery.value?.length || 0}}/7</mat-hint>
+          <mat-hint align="start"><strong>Input recover number/name</strong> </mat-hint>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+        
+                <!-- Email Column -->
+                <ng-container matColumnDef="os" fxFlex="40px">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <!-- <input [value]="element.os" [(ngModel)]="element.os" matInput placeholder="Enter your os" [formControl]="os"
+                                required> -->
+                            <!-- <mat-error *ngIf="os.invalid">{{getErrorMessageOs()}}</mat-error> -->
 
-          </td>
-      </ng-container>
-
-      <!-- Age Column -->
-      <ng-container matColumnDef="recoveryName">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-
-                <mat-form-field color="accent">
-                        <input matInput   #inputrecovery placeholder="Recovery" [(ngModel)]="element.recoveryName" name="recoveryName" minlength="7" required >
-                        <mat-error *ngIf="recoveryName.invalid">{{getErrorMessage()}} Min: {{inputrecovery.value?.length || 0}}/7</mat-error>
-                        <mat-hint align="end">Min: {{inputrecovery.value?.length || 0}}/7</mat-hint>
-                        <mat-hint align="start"><strong>Input recover number/name</strong> </mat-hint>
-                      </mat-form-field>
-          </td>
-      </ng-container>
-
-      <!-- Email Column -->
-      <ng-container matColumnDef="os" fxFlex="40px">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-                <mat-form-field color="accent">
-                        <mat-select placeholder="Windows" name="os" [(ngModel)]="element.os" required >
-                            <mat-option>None</mat-option>
-                            <mat-option value="10 Pro x64">10 Pro x64</mat-option>
-                            <mat-option value="10 Pro x32">10 Pro x32</mat-option>
-                            <mat-option value="10 Home x64">10 Home x64</mat-option>
-                            <mat-option value="10 Home x32">10 Home x32</mat-option>
-                            <mat-option value="8.1 Pro x64">8.1 Pro x64</mat-option>
-                            <mat-option value="8.1 Pro x32">8.1 Pro x32</mat-option>
-                            <mat-option value="8.1 Home x64">8.1 Home x64</mat-option>
-                            <mat-option value="8.1 Home x32">8.1 Home x32</mat-option>
-                            <mat-option value="8">8</mat-option>
-                            <mat-option value="7 Pro SP1 x64">7 Pro SP1 x64</mat-option>
-                            <mat-option value="7 Pro SP1 x32">7 Pro SP1 x32</mat-option>
-                            <mat-option value="7 Pro x64">7 Pro x64</mat-option>
-                            <mat-option value="7 Pro x32">7 Pro x32</mat-option>
-                            <mat-option value="10 Cloud">10 Cloud</mat-option>
-                            <mat-option value="10 S">10 S</mat-option>
-                          </mat-select>
-                          <mat-error *ngIf="os.invalid">{{getErrorMessage()}}</mat-error>
-                          <mat-hint>Choose Recovery OS version</mat-hint>
-                    </mat-form-field>
-          </td>
-      </ng-container>
-
-              <!-- Age Column -->
-              <ng-container matColumnDef="mediaTypes">
-                  <th mat-header-cell *matHeaderCellDef> </th>
-                  <td mat-cell *matCellDef="let element">
-                        <mat-form-field color="accent">
-                                <mat-select placeholder="Media" name="mediaTypes" [(ngModel)]="element.mediaTypes" required  >
+                            <mat-select placeholder="Windows" name="os" [(ngModel)]="element.os" required  [formControl]="os" [value]="element.os">
                                     <mat-option>None</mat-option>
-                                    <mat-option value="USB stick">USB stick</mat-option>
-                                    <mat-option value="DVD">DVD</mat-option>
+                                    <mat-option value="10 Pro x64">10 Pro x64</mat-option>
+                                    <mat-option value="10 Pro x32">10 Pro x32</mat-option>
+                                    <mat-option value="10 Home x64">10 Home x64</mat-option>
+                                    <mat-option value="10 Home x32">10 Home x32</mat-option>
+                                    <mat-option value="8.1 Pro x64">8.1 Pro x64</mat-option>
+                                    <mat-option value="8.1 Pro x32">8.1 Pro x32</mat-option>
+                                    <mat-option value="8.1 Home x64">8.1 Home x64</mat-option>
+                                    <mat-option value="8.1 Home x32">8.1 Home x32</mat-option>
+                                    <mat-option value="8">8</mat-option>
+                                    <mat-option value="7 Pro SP1 x64">7 Pro SP1 x64</mat-option>
+                                    <mat-option value="7 Pro SP1 x32">7 Pro SP1 x32</mat-option>
+                                    <mat-option value="7 Pro x64">7 Pro x64</mat-option>
+                                    <mat-option value="7 Pro x32">7 Pro x32</mat-option>
+                                    <mat-option value="10 Cloud">10 Cloud</mat-option>
+                                    <mat-option value="10 S">10 S</mat-option>
                                   </mat-select>
-                                  <mat-error *ngIf="mediaTypes.invalid">{{getErrorMessage()}}</mat-error>
-                                  <mat-hint>Choose storage media</mat-hint>
-                            </mat-form-field>
+                                  <mat-error *ngIf="os.invalid">{{getErrorMessageOs()}}</mat-error>
+                                  <mat-hint>Choose Recovery OS version</mat-hint>
+
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+        
+                        <!-- Age Column -->
+                        <ng-container matColumnDef="mediaTypes">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-form-field floatLabel="never">
+                                    <!-- <input matInput placeholder="mediaTypes" [value]="element.mediaTypes" [(ngModel)]="element.mediaTypes" [formControl]="mediaTypes" required>
+                                    <mat-error *ngIf="mediaTypes.invalid">{{getErrorMessageMedia()}}</mat-error> -->
+
+                                    <mat-select placeholder="Media" name="mediaTypes" [(ngModel)]="element.mediaTypes" [value]="element.mediaTypes"  [formControl]="mediaTypes"  required  >
+                                            <mat-option>None</mat-option>
+                                            <mat-option value="USB stick">USB stick</mat-option>
+                                            <mat-option value="DVD">DVD</mat-option>
+                                          </mat-select>
+                                          <mat-error *ngIf="mediaTypes.invalid">{{getErrorMessageMedia()}}</mat-error>
+                                          <mat-hint>Choose storage media</mat-hint>
+                                </mat-form-field>
                             </td>
-                            </ng-container>
+                        </ng-container>
+        
+                                <!-- Age Column -->
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field floatLabel="never">
+                            <!-- <input  matInput placeholder="location" [value]="element.location" [(ngModel)]="element.location" [formControl]="location" required>
+                            <mat-error *ngIf="location.invalid">{{getErrorMessageLocation()}}</mat-error> -->
 
-                      <!-- Age Column -->
-      <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-
-                <mat-form-field color="accent">
-                        <mat-select  placeholder="Location"  name="location" [(ngModel)]="element.location" required >
-                            <mat-option>None</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 1">Cabinet 1 Drawer 1</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 2">Cabinet 1 Drawer 2</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 3">Cabinet 1 Drawer 3</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 4">Cabinet 1 Drawer 4</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 5">Cabinet 1 Drawer 5</mat-option>
-                            <mat-option value="Cabinet 1 Drawer 6">Cabinet 1 Drawer 6</mat-option>
-                          </mat-select>
-                          <mat-error *ngIf="location.invalid">{{getErrorMessage()}}</mat-error>
-                          <mat-hint>Choose Recovery location</mat-hint>
-                    </mat-form-field>
-
-          </td>
-      </ng-container>
- 
-      <!-- Save Column -->
-      <ng-container matColumnDef="Save">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-              <button mat-raised-button (click)="saveRecovery(element)"  > <mat-icon color="accent">save</mat-icon>
-                  Save </button>
-          </td>
-      </ng-container>
-
-      <!-- Cancel Column -->
-      <ng-container matColumnDef="Cancel">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element">
-              <button mat-raised-button (click)="cancel()"> <mat-icon color="accent">cancel</mat-icon> Cancel </button>
-          </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsAddRecovery"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsAddRecovery;"></tr>
-  </table>
-</div>
+                            <mat-select  placeholder="Location"  name="location" [(ngModel)]="element.location"  [value]="element.location"  [formControl]="location" required >
+                                    <mat-option>None</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 1">Cabinet 1 Drawer 1</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 2">Cabinet 1 Drawer 2</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 3">Cabinet 1 Drawer 3</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 4">Cabinet 1 Drawer 4</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 5">Cabinet 1 Drawer 5</mat-option>
+                                    <mat-option value="Cabinet 1 Drawer 6">Cabinet 1 Drawer 6</mat-option>
+                                  </mat-select>
+                                  <mat-error *ngIf="location.invalid">{{getErrorMessageLocation()}}</mat-error>
+                                  <mat-hint>Choose Recovery location</mat-hint>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+        
+                <!-- Save Column -->
+                <ng-container matColumnDef="Change">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td id="actions" mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="saveRecovery(element)" color="accent"  [disabled]="unitname.invalid || mtm.invalid || recoveryName.invalid || os.invalid || mediaTypes.invalid || location.invalid "> <mat-icon >save</mat-icon>
+                             </button>
+                             <button mat-icon-button (click)="cancel()" color="accent"> <mat-icon >cancel</mat-icon>  </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsAddRecovery"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsAddRecovery;"></tr>
+            </table>
+        </div>
 <br>
 
 <mat-form-field>
@@ -165,9 +164,18 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header> unitname </th>
           <td mat-cell *matCellDef="let element"><p *ngIf="show1; else notShow">{{element.unitname}}</p>
             <ng-template #notShow>
-              <mat-form-field floatLabel="never" ng-show="showme">
-                  <input matInput placeholder="unitname" [value]="element.unitname"  >
-              </mat-form-field>
+
+              <mat-form-field >
+
+                    <textarea matInput #inputmodel class="form-control"   placeholder="Model" [(ngModel)]="element.unitname" name="name" required minlength="4"></textarea>
+                        <mat-error *ngIf="unitname.invalid">{{getErrorMessageName()}} Min: {{inputmodel.value?.length || 0}}/4</mat-error>
+                        <mat-hint align="end">Min: {{inputmodel.value?.length || 0}}/4</mat-hint>
+                        <mat-hint align="start"><strong>Input model name</strong> </mat-hint>
+
+
+
+ </mat-form-field>
+           
             </ng-template>
           </td>
       </ng-container>
@@ -243,13 +251,13 @@
           <th mat-header-cell *matHeaderCellDef> </th>
           <td  id="actions" mat-cell *matCellDef="let element" >
              <div *ngIf="show1; else notShow">
-              <button  mat-raised-button (click)="showhideEdit()" > <mat-icon color="accent">edit</mat-icon> Edit </button>
-               <button mat-raised-button (click)="openDialog(element)"> <mat-icon color="accent">delete</mat-icon> Delete</button>
+              <button  mat-icon-button color="accent" (click)="showhideEdit()" > <mat-icon >edit</mat-icon>  </button>
+               <button mat-icon-button color="warn" (click)="openDialog(element)"> <mat-icon >delete</mat-icon> </button>
                </div>
         <ng-template #notShow>
             
-                        <button  mat-raised-button (click)="editRecovery(element)" > <mat-icon color="accent">save</mat-icon> Save </button>
-                        <button mat-raised-button (click)="showhideEdit()"> <mat-icon color="accent">cancel</mat-icon> Cancel</button>
+                        <button   mat-icon-button color="accent" (click)="editRecovery(element)" [disabled]="unitname.invalid" > <mat-icon >save</mat-icon>  </button>
+                        <button  mat-icon-button color="accent" (click)="showhideEdit()"> <mat-icon >cancel</mat-icon> </button>
         </ng-template>
           </td>
       </ng-container>
