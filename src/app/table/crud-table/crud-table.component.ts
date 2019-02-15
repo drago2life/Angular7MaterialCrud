@@ -61,6 +61,8 @@ export class CrudTableComponent implements OnInit {
         this.dataSourceAddRecovery = new MatTableDataSource();
     }
 
+
+
     applyFilter(filterValue: string) {
         this.dataSourceRecoverys.filter = filterValue.trim().toLowerCase();
 
@@ -83,6 +85,10 @@ export class CrudTableComponent implements OnInit {
             this.dataSourceRecoverys.sort = this.sort;
             this.dataSourceRecoverys.paginator = this.paginator;
         },
+
+
+
+
             // tslint:disable-next-line:no-shadowed-variable
             error => {
                 alert('Error: ' + error.name);
@@ -172,9 +178,11 @@ export class CrudTableComponent implements OnInit {
         this.newRecovery = new Recovery(0, '', '', '', '', '', '');
     }
 
-    showhideEdit() {
-        this.show1 = !this.show1;
-    }
+    cancelEdit () {
+    this.openSnackBar('Recording was not edited. Cansel by user', 'Warning');
+
+    this.loadRecoverys();
+}
 
     getErrorMessageName() {
         return this.unitname.hasError('required') ? 'Required field. Minimum input 4 characters.'
